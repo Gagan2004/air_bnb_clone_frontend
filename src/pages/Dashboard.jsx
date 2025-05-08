@@ -50,7 +50,7 @@ const Dashboard = () => {
               >
                 <div className="border rounded-lg overflow-hidden">
                   <img
-                    src={b.property.image}
+                    src={b.property.images[0]}
                     alt={b.property.title}
                     className="w-full h-40 object-cover"
                   />
@@ -86,7 +86,7 @@ const Dashboard = () => {
               >
                 <div className="border rounded-lg overflow-hidden">
                   <img
-                    src={p.image}
+                    src={p.images[0]}
                     alt={p.title}
                     className="w-full h-40 object-cover"
                   />
