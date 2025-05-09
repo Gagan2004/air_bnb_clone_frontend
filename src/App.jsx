@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import HostProperty from './pages/HostProperty';
 import ManageBooking from './pages/ManageBooking';
 import EditProperty from './pages/EditProperty';
+import Bookings from './pages/Bookings';
 
    
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/bookings" element={<Bookings />} />
         <Route path="/properties/:id" element={<PropertyDetail />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/dashboard" element={<Dashboard />} />

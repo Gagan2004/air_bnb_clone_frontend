@@ -22,18 +22,44 @@ const Home = () => {
     fetchProperties();
   }, []);
 
-  if (loading) return <div className="text-center mt-10">Loading...</div>;
-  if (error) return <div className="text-center mt-10 text-red-500">{error}</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-50 text-gray-500 text-xl animate-pulse">
+        Loading properties...
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-50 text-red-600 text-lg font-semibold">
+        {error}
+      </div>
+    );
+
+
+
+
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Available Properties</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {properties.map((prop) => (
-          <PropertyCard key={prop.id} property={prop} />
-        ))}
+    <main className="min-h-screen bg-gradient-to-br from-white to-slate-100 py-12 px-4">
+      <div className="max-w-7xl mx-auto">
+        <header className="mb-10 text-center">
+          <h1 className="text-4xl font-bold text-gray-800 mb-2 tracking-tight">Find Your Next Stay</h1>
+          <p className="text-gray-500 text-lg">Browse through a curated list of top properties</p>
+        </header>
+
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {properties.map((prop) => (
+            <div
+              key={prop.id}
+              className="transform transition duration-300 hover:scale-[1.02] hover:shadow-xl"
+            >
+              <PropertyCard property={prop} />
+            </div>
+          ))}
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 

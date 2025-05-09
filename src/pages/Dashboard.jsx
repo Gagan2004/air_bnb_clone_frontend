@@ -9,100 +9,113 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchDashboardData = async () => {
       try {
-        const [bRes, pRes] = await Promise.all([
+        const [bookingsRes, propertiesRes] = await Promise.all([
           axiosInstance.get('/bookings'),
-          axiosInstance.get('/properties/me')
+          axiosInstance.get('/properties/me'),
         ]);
-        setBookings(bRes.data);
-        setProperties(pRes.data);
+        setBookings(bookingsRes.data);
+        setProperties(propertiesRes.data);
       } catch (error) {
-        console.error('Failed to load dashboard data', error);
+        console.error('Error loading dashboard data:', error);
       } finally {
         setLoading(false);
       }
     };
-    fetchData();
+
+    fetchDashboardData();
   }, []);
 
-  if (loading) return <p className="text-center mt-20 text-xl">Loading dashboard...</p>;
+  if (loading) return <p className="text-center mt-20 text-xl">Loading your dashboard...</p>;
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-8">
-      <h2 className="text-3xl font-extrabold text-gray-800 border-b pb-2">Dashboard</h2>
+    <div className="max-w-7xl mx-auto p-6 space-y-12">
+      <h2 className="text-3xl font-extrabold text-gray-900 border-b pb-2">Dashboard</h2>
 
-      {/* Bookings Section */}
-      <section className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex items-center mb-4">
-          <FaCalendarAlt className="text-2xl text-blue-600 mr-2" />
-          <h3 className="text-2xl font-semibold">My Upcoming Bookings</h3>
-        </div>
-        {bookings.length === 0 ? (
-          <p className="text-gray-600">You have no upcoming bookings.</p>
-        ) : (
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {bookings.map((b) => (
-              <Link
-                to={`/manage-booking/${b.id}`}
-                key={b.id}
-                className="block transform hover:scale-105 transition-transform"
-              >
-                <div className="border rounded-lg overflow-hidden">
-                  <img
-                    src={b.property.images[0]}
-                    alt={b.property.title}
-                    className="w-full h-40 object-cover"
-                  />
-                  <div className="p-4 bg-gray-50">
-                    <h4 className="font-bold text-lg text-gray-800 mb-1">{b.property.title}</h4>
-                    <p className="text-gray-600 text-sm mb-2">{b.property.location}</p>
-                    <p className="text-gray-700 font-medium">
-                      {new Date(b.startDate).toLocaleDateString()} - {new Date(b.endDate).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* Properties Section */}
-      <section className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex items-center mb-4">
-          <FaHome className="text-2xl text-green-600 mr-2" />
-          <h3 className="text-2xl font-semibold">My Properties</h3>
-        </div>
-        {properties.length === 0 ? (
-          <p className="text-gray-600">You have not listed any properties yet.</p>
-        ) : (
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {properties.map((p) => (
-              <Link
-                to={`/properties/${p.id}`}
-                key={p.id}
-                className="block transform hover:scale-105 transition-transform"
-              >
-                <div className="border rounded-lg overflow-hidden">
-                  <img
-                    src={p.images[0]}
-                    alt={p.title}
-                    className="w-full h-40 object-cover"
-                  />
-                  <div className="p-4 bg-gray-50">
-                    <h4 className="font-bold text-lg text-gray-800 mb-1">{p.title}</h4>
-                    <p className="text-gray-600 text-sm mb-2">{p.location}</p>
-                    <p className="text-gray-700 font-medium">${p.price} / night</p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </section>
+      <BookingSection bookings={bookings} />
+      <PropertySection properties={properties} />
     </div>
   );
+};
+
+const BookingSection = ({ bookings }) => (
+  <section className="bg-white rounded-lg shadow-md p-6">
+    <div className="flex items-center mb-4">
+      <FaCalendarAlt className="text-2xl text-blue-600 mr-2" />
+      <h3 className="text-2xl font-semibold">My Upcoming Bookings</h3>
+    </div>
+
+    {bookings.length === 0 ? (
+      <p className="text-gray-600">You have no upcoming bookings.</p>
+    ) : (
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {bookings.map((booking) => (
+          <Link
+            key={booking.id}
+            to={`/manage-booking/${booking.id}`}
+            className="transform hover:scale-105 transition-transform"
+          >
+            <div className="border rounded-lg overflow-hidden bg-gray-50">
+              <img
+                src={booking.property?.images[0] || '/placeholder.jpg'}
+                alt={booking.property?.title || 'Property'}
+                className="w-full h-40 object-cover"
+              />
+              <div className="p-4">
+                <h4 className="font-bold text-lg text-gray-800">{booking.property?.title}</h4>
+                <p className="text-sm text-gray-600 mb-1">{booking.property?.location}</p>
+                <p className="text-gray-700 font-medium">
+                  {formatDate(booking.startDate)} – {formatDate(booking.endDate)}
+                </p>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    )}
+  </section>
+);
+
+const PropertySection = ({ properties }) => (
+  <section className="bg-white rounded-lg shadow-md p-6">
+    <div className="flex items-center mb-4">
+      <FaHome className="text-2xl text-green-600 mr-2" />
+      <h3 className="text-2xl font-semibold">My Properties</h3>
+    </div>
+
+    {properties.length === 0 ? (
+      <p className="text-gray-600">You have not listed any properties yet.</p>
+    ) : (
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {properties.map((property) => (
+          <Link
+            key={property.id}
+            to={`/properties/${property.id}`}
+            className="transform hover:scale-105 transition-transform"
+          >
+            <div className="border rounded-lg overflow-hidden bg-gray-50">
+              <img
+                src={property.images[0] || '/placeholder.jpg'}
+                alt={property.title}
+                className="w-full h-40 object-cover"
+              />
+              <div className="p-4">
+                <h4 className="font-bold text-lg text-gray-800">{property.title}</h4>
+                <p className="text-sm text-gray-600 mb-1">{property.location}</p>
+                <p className="text-gray-700 font-medium">${property.price} / night</p>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    )}
+  </section>
+);
+
+const formatDate = (dateStr) => {
+  const date = new Date(dateStr);
+  return isNaN(date.getTime()) ? 'Invalid date' : date.toLocaleDateString();
 };
 
 export default Dashboard;
