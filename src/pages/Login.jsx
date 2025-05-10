@@ -18,7 +18,7 @@ const Login = () => {
     try {
       const { data } = await axiosInstance.post('/auth/login', form);
       localStorage.setItem('token', data.token);
-      navigate('/dashboard');
+      navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {
