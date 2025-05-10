@@ -5,6 +5,7 @@ import axiosInstance from '../api/axiosInstance';
 const Register = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) =>
@@ -12,12 +13,16 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
     try {
       const { data } = await axiosInstance.post('/auth/register', form);
       localStorage.setItem('token', data.token);
-      navigate('/dashboard');
+      navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,9 +60,12 @@ const Register = () => {
         />
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+          disabled={loading}
+          className={`w-full p-2 rounded text-white ${
+            loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+          }`}
         >
-          Register
+          {loading ? 'Registering...' : 'Register'}
         </button>
       </form>
       <p className="mt-4 text-center">
