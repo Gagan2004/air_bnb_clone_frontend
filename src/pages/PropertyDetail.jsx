@@ -80,13 +80,25 @@ const PropertyDetail = () => {
         </div>
 
         {/* Property Info */}
-        <div className="bg-white/90 backdrop-blur-md border border-gray-200 rounded-3xl p-8 shadow-xl space-y-4">
-          <h1 className="text-4xl font-extrabold text-gray-800">{property.title}</h1>
-          <p className="text-lg text-gray-600">{property.location}</p>
-          <p className="text-2xl font-bold text-green-600">${property.price} / night</p>
-          <p className="text-gray-700">{property.description}</p>
-          <Link to={`/properties/${property.id}/edit`} className="text-blue-600 underline hover:text-blue-800 transition">✏️ Edit Listing</Link>
-        </div>  
+        <div className="relative bg-white/90 backdrop-blur-md border border-gray-200 rounded-3xl p-8 shadow-xl space-y-6">
+  {/* Edit Button Top-Right */}
+  <Link
+    to={`/properties/${property.id}/edit`}
+    className="absolute top-4 right-4 bg-red-700 hover:bg-black-600 text-white font-bold px-4 py-2 rounded-lg shadow-md transition duration-200"
+  >
+     Edit
+  </Link>
+
+  {/* Main Content */}
+  <div className="space-y-4">
+    <h1 className="text-4xl font-extrabold text-gray-800">{property.title}</h1>
+    <p className="text-lg text-gray-600">{property.location}</p>
+    <p className="text-2xl font-bold text-green-600">${property.price} / night</p>
+    <p className="text-gray-700">{property.description}</p>
+  </div>
+</div>
+
+
 
         {/* Booking Form */}
         <form onSubmit={handleBookingSubmit} className="bg-white/90 backdrop-blur-md border border-gray-200 rounded-3xl p-8 shadow-lg space-y-6">

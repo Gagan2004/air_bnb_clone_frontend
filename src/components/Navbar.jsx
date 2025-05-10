@@ -297,7 +297,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow p-4 flex justify-between items-center">
       {/* Brand */}
-      <Link to="/" className="text-xl font-bold text-red-500">
+      <Link to="/" className="text-2xl font-bold text-red-500">
         StayEase
       </Link>
 
@@ -325,7 +325,7 @@ const Navbar = () => {
           to={getLink('/host-property')}
           className="text-gray-700 hover:text-red-500 font-medium"
         >
-          Host
+          Host Property
         </Link>
       </div>
 

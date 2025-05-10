@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../api/axiosInstance';
 import PropertyCard from '../components/PropertyCard';
+import { Link } from 'react-router';
 
 const Home = () => {
   const [properties, setProperties] = useState([]);
@@ -50,12 +51,16 @@ const Home = () => {
 
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {properties.map((prop) => (
+            // <Link  to={`/properties/${property.id}`}>
+            <Link to={`/properties/${prop.id}`}>
+
             <div
               key={prop.id}
               className="transform transition duration-300 hover:scale-[1.02] hover:shadow-xl"
             >
               <PropertyCard property={prop} />
             </div>
+             </Link>
           ))}
         </section>
       </div>
