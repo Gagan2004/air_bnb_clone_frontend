@@ -10,6 +10,8 @@ import HostProperty from './pages/HostProperty';
 import ManageBooking from './pages/ManageBooking';
 import EditProperty from './pages/EditProperty';
 import Bookings from './pages/Bookings';
+import SearchResultsPage from './pages/SearchResultsPage'; // <--- Your new search results page
+
 
    
 
@@ -28,6 +30,8 @@ function App() {
         <Route path="/host-property" element={<HostProperty />} />
         <Route path="/manage-booking/:bookingId" element={<ManageBooking />} />
         <Route path="/properties/:id/edit" element={<EditProperty />} />
+        <Route path="/search-results" element={<SearchResultsPage />} />
+
 
       </Routes>
     </div>

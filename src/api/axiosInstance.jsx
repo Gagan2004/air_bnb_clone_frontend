@@ -1,7 +1,8 @@
 import axios from 'axios';
   
   const axiosInstance = axios.create({
-    baseURL: "https://air-bnb-clone-backend.onrender.com/api",
+    // baseURL: "https://air-bnb-clone-backend.onrender.com/api",
+    baseURL:"http://localhost:3000/api",
     headers: {
       'Content-Type': 'application/json',
     },
