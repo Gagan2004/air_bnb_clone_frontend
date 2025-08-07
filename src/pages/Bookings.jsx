@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../api/axiosInstance'; // Adjust the path accordingly
+import { useNavigate } from 'react-router';
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+    const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -42,6 +45,7 @@ const Bookings = () => {
             <div
               key={id}
               className="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-200 transition duration-300 hover:shadow-xl"
+              onClick={()=> navigate(`/manage-booking/${id}`)}
             >
               <img
                 src={imageUrl}

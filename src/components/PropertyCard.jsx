@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom';
 const PropertyCard = ({ property }) => {
 
 
-  const rando = Math.floor(Math.random() * 2) 
+  // const rando = Math.floor(Math.random() * 2) 
 
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
 
       <img
-        src={property.images[rando]}
+        src={property.images[0]}
         alt={property.title}
         className="w-full h-48 object-cover"
       />
