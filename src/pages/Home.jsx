@@ -141,7 +141,7 @@ const Home = () => {
         {/* Header */}
         <header className="text-center space-y-2">
           <h1 className="text-4xl font-bold text-gray-800 tracking-tight">
-            Find Your Next Stay
+            Your Next Stay COULD BE ::::
           </h1>
           <p className="text-gray-500 text-lg">
             Search by location, price, amenities, or just ask “Show beach villas under ₹3000 with pool”
